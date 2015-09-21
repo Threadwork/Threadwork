@@ -7,15 +7,18 @@
    * @param  {object} payload
    * @param  {function} workerFunction
    * @param  {function} readyFunction
-   * @return {Worker} worker
+   * @return {Worker | null} worker
    */
   _.worker = function (payload, workerFunction, readyFunction) {
+
+    /* Fallback if there is any kind of trouble. */
     var fallback = function fallback() {
       workerFunction();
       readyFunction();
       return null;
     };
 
+    /* Check if there is a worker object. */
     if (window.Worker) {
       var _ret = (function () {
         var blob = undefined,
@@ -30,25 +33,21 @@
 
         workerFunction = "this.onmessage=" + workerFunction.toString();
 
+        /* Check if there is a blob object. */
         if (window.Blob) {
           blob = new Blob([workerFunction], {
             type: "application/javascript"
           });
         } else {
-          blobbuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
-          if (blobbuilder) {
-            blob = blobbuilder.append(workerFunction).getBlob();
-          }
+          /* If not, try to use the BlobBuilder */
+          BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
+          blob = BlobBuilder && new BlobBuilder().append(workerFunction).getBlob();
         }
 
-        if (blob) {
-          worker = webWorker(blob);
-          return {
-            v: worker
-          };
-        } else return {
-            v: fallback()
-          };
+        /* If there is a blob, call the web worker. In other cases call the fallback. */
+        return {
+          v: typeof blob !== "undefined" ? webWorker(blob) : fallback()
+        };
       })();
 
       if (typeof _ret === "object") return _ret.v;
