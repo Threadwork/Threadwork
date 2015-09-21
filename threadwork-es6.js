@@ -17,13 +17,14 @@
     }
 
     if (window.Worker) {
-      let blob, worker, url, blobbuilder, webWorker = function(blob) {
-        worker = new Worker(url.createObjectURL(blob));
-        worker.onmessage = readyFunction;
-        worker.postMessage(payload);
-      };
+      let blob, worker, blobbuilder,
+        url = window.URL || window.webkitURL,
+        webWorker = function(blob) {
+          worker = new Worker(url.createObjectURL(blob));
+          worker.onmessage = readyFunction;
+          worker.postMessage(payload);
+        };
 
-      url = window.URL || window.webkitURL;
       workerFunction = "this.onmessage=" + workerFunction.toString();
 
       if (window.Blob) {

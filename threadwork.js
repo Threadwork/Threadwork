@@ -20,15 +20,14 @@
       var _ret = (function () {
         var blob = undefined,
             worker = undefined,
-            url = undefined,
             blobbuilder = undefined,
+            url = window.URL || window.webkitURL,
             webWorker = function webWorker(blob) {
           worker = new Worker(url.createObjectURL(blob));
           worker.onmessage = readyFunction;
           worker.postMessage(payload);
         };
 
-        url = window.URL || window.webkitURL;
         workerFunction = "this.onmessage=" + workerFunction.toString();
 
         if (window.Blob) {
