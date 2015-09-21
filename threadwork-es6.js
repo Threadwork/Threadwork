@@ -1,12 +1,6 @@
-"use strict";
-
-var _ = {};
-_.worker = function (payload, workerFunction, readyFunction) {
-  var blob = undefined,
-      response = undefined,
-      worker = undefined,
-      url = undefined,
-      blobbuilder = undefined;
+let _ = {};
+_.worker = function(payload, workerFunction, readyFunction) {
+  let blob, response, worker, url, blobbuilder;
   url = window.URL || window.webkitURL;
   response = "self.onmessage=" + workerFunction.toString();
   try {
@@ -15,7 +9,7 @@ _.worker = function (payload, workerFunction, readyFunction) {
     });
   } catch (error) {
     blobbuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
-    blob = blobbuilder.append(response).getBlob();
+    blob = (blobbuilder).append(response).getBlob();
   }
   worker = new Worker(url.createObjectURL(blob));
   worker.onmessage = readyFunction;

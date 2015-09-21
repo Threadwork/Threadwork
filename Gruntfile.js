@@ -1,12 +1,13 @@
 module.exports = function(grunt) {
   grunt.initConfig({
 
-    coffee: {
-      compile: {
+    babel: {
+      options: {
+        sourceMap: false
+      },
+      dist: {
         files: {
-          "threadwork.js": [
-            "threadwork.coffee"
-          ]
+          "threadwork.js": "threadwork-es6.js"
         }
       }
     },
@@ -26,7 +27,7 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks("grunt-contrib-uglify");
-  grunt.loadNpmTasks("grunt-contrib-coffee");
+  grunt.loadNpmTasks("grunt-babel");
 
-  grunt.registerTask("default", ["coffee", "uglify"]);
+  grunt.registerTask("default", ["babel", "uglify"]);
 }
