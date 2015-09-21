@@ -8,7 +8,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          "threadwork.js": "threadwork-es6.js"
+          "dist/threadwork.js": "threadwork-es6.js"
         }
       }
     },
@@ -19,8 +19,8 @@ module.exports = function(grunt) {
       },
       default: {
         files: {
-          "threadwork.min.js": [
-            "threadwork.js"
+          "dist/threadwork.min.js": [
+            "dist/threadwork.js"
           ]
         }
       }
