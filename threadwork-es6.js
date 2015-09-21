@@ -12,7 +12,7 @@
   _.worker = function(payload, workerFunction, readyFunction) {
 
     /* Fallback if there is any kind of trouble. */
-    let fallback = function() {
+    function fallback() {
       workerFunction();
       readyFunction();
       return null;

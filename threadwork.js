@@ -12,11 +12,11 @@
   _.worker = function (payload, workerFunction, readyFunction) {
 
     /* Fallback if there is any kind of trouble. */
-    var fallback = function fallback() {
+    function fallback() {
       workerFunction();
       readyFunction();
       return null;
-    };
+    }
 
     /* Check if there is a worker object. */
     if (window.Worker) {
