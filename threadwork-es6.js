@@ -1,4 +1,4 @@
-let _ = {};
+let _ = _ || {};
 _.worker = function(payload, workerFunction, readyFunction) {
   let blob, response, worker, url, blobbuilder;
   url = window.URL || window.webkitURL;
