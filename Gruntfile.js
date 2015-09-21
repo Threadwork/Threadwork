@@ -3,7 +3,8 @@ module.exports = function(grunt) {
 
     babel: {
       options: {
-        sourceMap: false
+        sourceMap: false,
+        blacklist: ['strict']
       },
       dist: {
         files: {
