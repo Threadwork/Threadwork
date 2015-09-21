@@ -2,7 +2,7 @@ let _ = {};
 _.worker = function(payload, workerFunction, readyFunction) {
   let blob, response, worker, url, blobbuilder;
   url = window.URL || window.webkitURL;
-  response = "self.onmessage=" + workerFunction.toString();
+  response = "this.onmessage=" + workerFunction.toString();
   try {
     blob = new Blob([response], {
       type: "application/javascript"

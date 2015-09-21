@@ -8,7 +8,7 @@ _.worker = function (payload, workerFunction, readyFunction) {
       url = undefined,
       blobbuilder = undefined;
   url = window.URL || window.webkitURL;
-  response = "self.onmessage=" + workerFunction.toString();
+  response = "this.onmessage=" + workerFunction.toString();
   try {
     blob = new Blob([response], {
       type: "application/javascript"
