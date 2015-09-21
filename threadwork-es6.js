@@ -10,16 +10,16 @@
    * @return {Worker} worker
    */
   _.worker = function(payload, workerFunction, readyFunction) {
-    let blob, response, worker, url, blobbuilder;
+    let blob, worker, url, blobbuilder;
     url = window.URL || window.webkitURL;
-    response = "this.onmessage=" + workerFunction.toString();
+    workerFunction = "this.onmessage=" + workerFunction.toString();
     try {
-      blob = new Blob([response], {
+      blob = new Blob([workerFunction], {
         type: "application/javascript"
       });
     } catch (error) {
       blobbuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
-      blob = (blobbuilder).append(response).getBlob();
+      blob = (blobbuilder).append(workerFunction).getBlob();
     }
     worker = new Worker(url.createObjectURL(blob));
     worker.onmessage = readyFunction;
