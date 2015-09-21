@@ -1,6 +1,6 @@
 "use strict";
 
-var _ = {};
+var _ = _ || {};
 _.worker = function (payload, workerFunction, readyFunction) {
   var blob = undefined,
       response = undefined,
