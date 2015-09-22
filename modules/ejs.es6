@@ -1,8 +1,7 @@
 let renderTemplate = function(templateString, args) {
     new Thread({templateString, args}, (e) => {
-        var cache = {};
-        var tmpl = function tmpl(str, data) {
-            var fn = !/\W/.test(str) ?
+        let cache = {}, tmpl = function tmpl(str, data) {
+            let fn = !/\W/.test(str) ?
                 cache[str] = cache[str] : new Function("obj",
                     "var p=[],print=function(){p.push.apply(p,arguments);};with(obj){p.push('" +
                     str
@@ -15,7 +14,7 @@ let renderTemplate = function(templateString, args) {
                     .split("\r").join("\\'") + "');}return p.join('');");
             return data ? fn(data) : fn;
         };
-        postMessage(tmpl(e.data.templateString, e.data.args));
+        postMessage(tmpl(e.data.templateString, e.data.args || {}));
     }, (e) => {
         console.log(e.data);
     });
