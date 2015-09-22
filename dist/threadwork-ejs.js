@@ -9,7 +9,7 @@ var renderTemplate = function renderTemplate(templateString, args) {
     };
 
     new Thread({ templateString: templateString, args: args }, compile, function (HTML) {
-        console.log(HTML);
+        /* document.getElementById("headline").innerHTML = HTML; */
     });
 };
 

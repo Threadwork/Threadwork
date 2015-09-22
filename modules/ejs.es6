@@ -18,7 +18,7 @@ let renderTemplate = function(templateString, args) {
     }
 
     new Thread({templateString, args}, compile, (HTML) => {
-        console.log(HTML);
+        /* document.getElementById("headline").innerHTML = HTML; */
     });
 };
 
