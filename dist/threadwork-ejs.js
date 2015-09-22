@@ -1,5 +1,4 @@
-var EJS = {};
-EJS.template = function (templateString, args) {
+var renderTemplate = function renderTemplate(templateString, args) {
     new Thread({ templateString: templateString, args: args }, function (e) {
         var cache = {};
         var tmpl = function tmpl(str, data) {
@@ -12,4 +11,4 @@ EJS.template = function (templateString, args) {
     });
 };
 
-EJS.template("<%= title %>", { title: "Hello World" });
+renderTemplate("<%= title %>", { title: "Hello World" });

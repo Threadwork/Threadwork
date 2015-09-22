@@ -1,11 +1,9 @@
-var EJS = {};
-EJS.template = function(templateString, args) {
+let renderTemplate = function(templateString, args) {
     new Thread({templateString, args}, (e) => {
         var cache = {};
         var tmpl = function tmpl(str, data) {
             var fn = !/\W/.test(str) ?
-                cache[str] = cache[str] :
-                new Function("obj",
+                cache[str] = cache[str] : new Function("obj",
                     "var p=[],print=function(){p.push.apply(p,arguments);};with(obj){p.push('" +
                     str
                     .replace(/[\r\t\n]/g, " ")
@@ -23,4 +21,4 @@ EJS.template = function(templateString, args) {
     });
 };
 
-EJS.template("<%= title %>", { title: "Hello World" });
+renderTemplate("<%= title %>", { title: "Hello World" });
