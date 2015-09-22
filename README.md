@@ -1,7 +1,7 @@
 # Threadwork
 
 ```
-_.worker({
+new Thread({
   Parameter: "123"
 }, (function(e) {
   var Args;

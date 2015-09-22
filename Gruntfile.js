@@ -8,7 +8,8 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          "dist/threadwork.js": "threadwork-es6.js"
+          "dist/threadwork.js": "threadwork.es6",
+          "dist/threadwork-ejs.js": "modules/ejs.es6",
         }
       }
     },

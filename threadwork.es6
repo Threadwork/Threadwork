@@ -1,20 +1,15 @@
-(function(window, document, undefined) {
-  "use strict";
-  let _ = _ || {};
+class Thread {
 
-  /**
-   * Description of the function
-   * @param  {object} payload
-   * @param  {function} workerFunction
-   * @param  {function} readyFunction
-   * @return {Worker | null} worker
-   */
-  _.worker = function(payload, workerFunction, readyFunction) {
+  constructor(payload, workerFunction, readyFunction) {
+    this.start(payload, workerFunction, readyFunction);
+  }
+
+  start(payload, workerFunction, readyFunction) {
 
     /* Fallback if there is any kind of trouble. */
     function fallback() {
-      workerFunction();
-      readyFunction();
+      this.workerFunction();
+      this.readyFunction();
       return null;
     }
 
@@ -24,6 +19,7 @@
         url = window.URL || window.webkitURL,
         webWorker = function(blob) {
           worker = new Worker(url.createObjectURL(blob));
+          worker.onerror = (event) => { throw new Error(`${event.message} (${event.filename}:${event.lineno})`); }
           worker.onmessage = readyFunction;
           worker.postMessage(payload);
         };
@@ -47,4 +43,4 @@
 
     } else return fallback();
   };
-})(window, document);
+}
