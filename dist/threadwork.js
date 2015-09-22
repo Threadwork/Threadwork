@@ -32,7 +32,9 @@ var Thread = (function () {
             worker.onerror = function (event) {
               throw new Error(event.message + " (" + event.filename + ":" + event.lineno + ")");
             };
-            worker.onmessage = readyFunction;
+            worker.onmessage = function (e) {
+              readyFunction(e.data);
+            };
             worker.postMessage(payload);
           };
 

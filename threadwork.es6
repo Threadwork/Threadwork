@@ -19,8 +19,12 @@ class Thread {
         url = window.URL || window.webkitURL,
         webWorker = function(blob) {
           worker = new Worker(url.createObjectURL(blob));
-          worker.onerror = (event) => { throw new Error(`${event.message} (${event.filename}:${event.lineno})`); }
-          worker.onmessage = readyFunction;
+          worker.onerror = (event) => {
+            throw new Error(`${event.message} (${event.filename}:${event.lineno})`);
+          }
+          worker.onmessage = (e) => {
+            readyFunction(e.data);
+          };
           worker.postMessage(payload);
         };
 

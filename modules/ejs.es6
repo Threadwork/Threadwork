@@ -1,5 +1,5 @@
 let renderTemplate = function(templateString, args) {
-    new Thread({templateString, args}, (e) => {
+    compile = (e) => {
         let cache = {}, tmpl = function tmpl(str, data) {
             let fn = !/\W/.test(str) ?
                 cache[str] = cache[str] : new Function("obj",
@@ -15,8 +15,10 @@ let renderTemplate = function(templateString, args) {
             return data ? fn(data) : fn;
         };
         postMessage(tmpl(e.data.templateString, e.data.args || {}));
-    }, (e) => {
-        console.log(e.data);
+    }
+
+    new Thread({templateString, args}, compile, (HTML) => {
+        console.log(HTML);
     });
 };
 
