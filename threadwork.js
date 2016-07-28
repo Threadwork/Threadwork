@@ -1,3 +1,5 @@
+"use strict";
+
 class Thread {
 
   constructor(payload, workerFunction, readyFunction) {
@@ -7,7 +9,7 @@ class Thread {
   start(payload, workerFunction, readyFunction) {
 
     /* Fallback if there is any kind of trouble. */
-    function fallback() {
+    const fallback = () => {
       this.workerFunction();
       this.readyFunction();
       return null;
@@ -17,12 +19,12 @@ class Thread {
     if (window.Worker) {
       let blob, worker, blobbuilder,
         url = window.URL || window.webkitURL,
-        webWorker = function(blob) {
+        webWorker = blob => {
           worker = new Worker(url.createObjectURL(blob));
-          worker.onerror = (event) => {
+          worker.onerror = event => {
             throw new Error(`${event.message} (${event.filename}:${event.lineno})`);
           }
-          worker.onmessage = (e) => {
+          worker.onmessage = e => {
             readyFunction(e.data);
           };
           worker.postMessage(payload);
@@ -47,4 +49,11 @@ class Thread {
 
     } else return fallback();
   };
+}
+
+if (typeof exports !== 'undefined') {
+  if (typeof module !== 'undefined' && module.exports) {
+    exports = module.exports = Thread;
+  }
+  exports.threadwork = Thread;
 }
